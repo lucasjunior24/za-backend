@@ -1,9 +1,10 @@
 from typing import Union
-from app.db.connection import connect
-
-
 from fastapi import FastAPI
+
+from app.db.connection import connect
 from app.view.user import user_router
+from app.view.login import login_router
+
 app = FastAPI()
 
 
@@ -19,3 +20,4 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 
 app.include_router(user_router)
+app.include_router(login_router)
