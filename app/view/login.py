@@ -26,17 +26,6 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
-class UserVM(BaseModel):
-    username: str
-    email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
-
-
-class UserInDB(UserVM):
-    hashed_password: str
-
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -94,7 +83,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 
 
 async def get_current_active_user(
-    current_user: Annotated[UserVM, Depends(get_current_user)]
+    current_user: Annotated[User, Depends(get_current_user)]
 ):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
@@ -135,6 +124,6 @@ async def read_users_me(
 
 @login_router.get("/users/me/items/")
 async def read_own_items(
-    current_user: Annotated[UserVM, Depends(get_current_active_user)]
+    current_user: Annotated[User, Depends(get_current_active_user)]
 ):
-    return [{"item_id": "Foo", "owner": current_user.username}]
+    return [{"item_id": "Foo", "owner": current_user.email}]
