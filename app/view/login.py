@@ -91,13 +91,13 @@ async def get_current_active_user(
 
 
 
-@login_router.get("/token")
+@login_router.get("/hash", tags=["login"])
 async def get_hash(password: str) -> Token:
     hash = get_password_hash(password)
     return Token(access_token=hash, token_type="bearer")
 
 
-@login_router.post("/token")
+@login_router.post("/token", tags=["login"])
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ) -> Token:
@@ -115,14 +115,14 @@ async def login_for_access_token(
     return Token(access_token=access_token, token_type="bearer")
 
 
-@login_router.get("/users/me/", response_model=UserResponseDTO)
+@login_router.get("/users/me/", response_model=UserResponseDTO, tags=["login"])
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
-    return UserResponseDTO(**current_user.to_json())
+    print(current_user)
+    return current_user
 
-
-@login_router.get("/users/me/items/")
+@login_router.get("/users/me/items/", tags=["login"])
 async def read_own_items(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):

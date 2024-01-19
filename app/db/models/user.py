@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import cast
 from mongoengine import *
 
@@ -8,6 +9,8 @@ class User(Document):
     disabled = BooleanField(default=False)
     admin = BooleanField(default=False)
     admin_master = BooleanField(default=False)
+    created_at = DateTimeField(default=datetime.now(), required=True)
+    updated_at = DateTimeField(default=datetime.now(), required=True)
 
     def to_json(self):
         return {
@@ -18,6 +21,8 @@ class User(Document):
             "disabled": self.disabled,
             "admin": self.admin,
             "admin_master": self.admin_master,
+            "created_at": str(self.created_at),
+            "updated_at": str(self.updated_at),
         }
     
     @classmethod

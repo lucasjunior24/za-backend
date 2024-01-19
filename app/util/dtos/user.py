@@ -14,3 +14,5 @@ class UserResponseDTO(BaseModel):
     disabled: bool
     admin: bool
     admin_master: bool
+    created_at: str
+    updated_at: str
