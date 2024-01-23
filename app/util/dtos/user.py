@@ -7,7 +7,7 @@ class UserDTO(BaseModel):
 
 
 class UserResponseDTO(BaseModel):
-    _id: str
+    id: str
     email: str
     name: str
     hashed_password: str

@@ -18,8 +18,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 class Token(BaseModel):
-    access_token: str
+    token: str
     token_type: str
+    user: UserResponseDTO
 
 
 class TokenData(BaseModel):
@@ -112,7 +113,9 @@ async def login_for_access_token(
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    return Token(access_token=access_token, token_type="bearer")
+    user_login = user.to_json()
+    user_login["id"] =  user_login["_id"]
+    return Token(token=access_token, token_type="bearer", user=user_login)
 
 
 @login_router.get("/users/me/", response_model=UserResponseDTO, tags=["login"])
