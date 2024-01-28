@@ -14,7 +14,7 @@ class Doctor(Document):
 
     def to_json(self):
         return {
-            "_id": str(self.pk),
+            "id": str(self.pk),
             "email": self.email,
             "name": self.name,
             "specialization": self.specialization,

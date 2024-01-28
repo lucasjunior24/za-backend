@@ -10,7 +10,7 @@ class DoctorDTO(BaseModel):
 
 
 class DoctorResponseDTO(BaseModel):
-    _id: str
+    id: str
     email: str
     name: str
     specialization: str

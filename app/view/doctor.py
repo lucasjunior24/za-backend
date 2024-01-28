@@ -23,7 +23,7 @@ async def get_doctors_by_name(name: str):
     return doctors
 
 
-@doctor_router.get("/doctors/{email}/email", tags=["doctors"])
+@doctor_router.get("/doctors/{email}/email", tags=["doctors"], response_model=list[DoctorResponseDTO])
 async def get_doctor_by_email(email: str):
     doctor = Doctor.get_doctor_by_email(email)
     return doctor.to_json()
