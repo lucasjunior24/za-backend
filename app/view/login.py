@@ -113,7 +113,6 @@ async def login_for_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
     user_login = user.to_json()
-    user_login["id"] =  user_login["_id"]
     return Token(access_token=access_token, token_type="bearer")
 
 
@@ -123,6 +122,5 @@ async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
     user_login = current_user.to_json()
-    user_login["id"] = user_login["_id"]
     print(user_login)
     return user_login
