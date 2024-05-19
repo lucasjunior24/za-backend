@@ -18,9 +18,8 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 class Token(BaseModel):
-    token: str
+    access_token: str
     token_type: str
-    user: UserResponseDTO
 
 
 class TokenData(BaseModel):
@@ -95,7 +94,7 @@ async def get_current_active_user(
 @login_router.get("/hash", tags=["login"])
 async def get_hash(password: str) -> Token:
     hash = get_password_hash(password)
-    return Token(access_token=hash, token_type="bearer")
+    return Token(access_token=hash, token_type="Bearer")
 
 
 @login_router.post("/token", tags=["login"])
@@ -115,18 +114,15 @@ async def login_for_access_token(
     )
     user_login = user.to_json()
     user_login["id"] =  user_login["_id"]
-    return Token(token=access_token, token_type="bearer", user=user_login)
+    return Token(access_token=access_token, token_type="bearer")
+
 
 
 @login_router.get("/users/me/", response_model=UserResponseDTO, tags=["login"])
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
-    print(current_user)
-    return current_user
-
-@login_router.get("/users/me/items/", tags=["login"])
-async def read_own_items(
-    current_user: Annotated[User, Depends(get_current_active_user)]
-):
-    return [{"item_id": "Foo", "owner": current_user.email}]
+    user_login = current_user.to_json()
+    user_login["id"] = user_login["_id"]
+    print(user_login)
+    return user_login

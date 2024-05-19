@@ -6,6 +6,7 @@ from app.db.models.doctor import Doctor
 from app.db.models.user import User
 from app.util.dtos.doctor import DoctorResponseDTO, DoctorDTO
 from app.view.login import get_current_active_user
+from fastapi.middleware.cors import CORSMiddleware
 
 
 doctor_router = APIRouter()
