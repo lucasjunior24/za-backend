@@ -1,0 +1,11 @@
+version: '3'
+services:
+  za_backend:
+    build: ../../
+    command: sh -c "uvicorn main:app --reload --host 0.0.0.0 --port 8008"
+    ports:
+      - "8008:8008"
+    env_file:
+      - ../../.env
+    volumes:
+      - ../../:/app
