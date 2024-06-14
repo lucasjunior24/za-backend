@@ -1,0 +1,9 @@
+version: '3'
+services:
+  za:
+    build: ../../
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8008"
+    ports:
+      - "8008:8008"
+    volumes:
+      - .:/app
