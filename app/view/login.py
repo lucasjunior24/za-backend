@@ -7,6 +7,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
+
 from app.util.dtos.user import UserResponseDTO
 from app.db.models.user import User
 

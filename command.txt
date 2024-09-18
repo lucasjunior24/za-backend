@@ -6,6 +6,8 @@ docker
 docker build -t za:1.0 .
 docker run -d -p 8008:80 za:1.0
 
-
-
 docker compose up --build
+
+
+Makefile
+make deploy-local
